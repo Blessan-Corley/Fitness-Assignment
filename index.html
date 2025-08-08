@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife - Your Wellness Journey Starts Here</title>
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #004643;
+            --accent-color: #faf4d3;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --white: #ffffff;
+            --gradient-1: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            --gradient-2: linear-gradient(135deg, #004643 0%, #0f3433 100%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: var(--gradient-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.7s forwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--gradient-1);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.9s forwards;
+            box-shadow: var(--shadow);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Tips Grid */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tip-card {
+            background: var(--white);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tip-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-1);
+        }
+
+        .tip-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .tip-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .tip-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .tip-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Workout Section */
+        .workout-section {
+            background: linear-gradient(135deg, var(--accent-color) 0%, rgba(250, 244, 211, 0.5) 100%);
+            padding: 5rem 0;
+        }
+
+        .workout-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .workout-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .workout-card:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .workout-image {
+            height: 200px;
+            background: var(--gradient-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 3rem;
+        }
+
+        .workout-content {
+            padding: 2rem;
+        }
+
+        .workout-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .workout-duration {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .workout-description {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Nutrition Section */
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .nutrition-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .nutrition-list {
+            list-style: none;
+        }
+
+        .nutrition-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nutrition-list li::before {
+            content: '✓';
+            background: var(--gradient-1);
+            color: var(--white);
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .nutrition-visual {
+            background: var(--gradient-1);
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 4rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .nutrition-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .workout-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">FitLife</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#tips">Tips</a></li>
+                <li><a href="#workouts">Workouts</a></li>
+                <li><a href="#nutrition">Nutrition</a></li>
+                <li><a href="#stats">Progress</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Transform Your Life</h1>
+            <p>Embark on a journey of wellness, strength, and vitality. Your healthiest self awaits.</p>
+            <a href="#tips" class="cta-button">Start Your Journey</a>
+        </div>
+    </section>
+
+    <!-- Fitness Tips Section -->
+    <section id="tips" class="section">
+        <div class="section-header reveal">
+            <h2 class="section-title">Essential Fitness Tips</h2>
+            <p class="section-subtitle">Science-backed strategies to maximize your fitness results and maintain a healthy lifestyle</p>
+        </div>
+        
+        <div class="tips-grid">
+            <div class="tip-card reveal">
+                <div class="tip-icon">💪</div>
+                <h3>Consistency Over Intensity</h3>
+                <p>Regular moderate exercise beats sporadic intense workouts. Aim for 150 minutes of moderate activity weekly to build lasting habits and see sustainable results.</p>
+            </div>
+            
+            <div class="tip-card reveal">
+                <div class="tip-icon">💧</div>
+                <h3>Stay Hydrated</h3>
+                <p>Proper hydration enhances performance and recovery. Drink water before, during, and after workouts. Aim for 8-10 glasses daily, more if you're active.</p>
+            </div>
+            
+            <div class="tip-card reveal">
+                <div class="tip-icon">😴</div>
+                <h3>Prioritize Recovery</h3>
+                <p>Quality sleep is when your body repairs and grows stronger. Aim for 7-9 hours nightly and include rest days in your workout schedule for optimal results.</p>
+            </div>
+            
+            <div class="tip-card reveal">
+                <div class="tip-icon">🎯</div>
+                <h3>Set SMART Goals</h3>
+                <p>Specific, Measurable, Achievable, Relevant, and Time-bound goals keep you motivated and on track. Break large goals into smaller milestones.</p>
+            </div>
+            
+            <div class="tip-card reveal">
+                <div class="tip-icon">🔥</div>
+                <h3>Progressive Overload</h3>
+                <p>Gradually increase workout intensity, duration, or resistance to continue challenging your body and prevent plateaus in your fitness journey.</p>
+            </div>
+            
+            <div class="tip-card reveal">
+                <div class="tip-icon">🧘</div>
+                <h3>Mind-Body Connection</h3>
+                <p>Focus on form and breathing during exercises. This improves effectiveness, reduces injury risk, and enhances the mental benefits of physical activity.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workouts Section -->
+    <section id="workouts" class="workout-section">
+        <div class="section">
+            <div class="section-header reveal">
+                <h2 class="section-title">Quick Workout Routines</h2>
+                <p class="section-subtitle">Effective workouts you can do anywhere, anytime to stay fit and energized</p>
+            </div>
+            
+            <div class="workout-cards">
+                <div class="workout-card reveal">
+                    <div class="workout-image">🏃‍♂️</div>
+                    <div class="workout-content">
+                        <span class="workout-duration">15 Minutes</span>
+                        <h3>Morning Energy Boost</h3>
+                        <p class="workout-description">Start your day with jumping jacks, push-ups, squats, and stretches. Perfect for awakening your body and mind.</p>
+                    </div>
+                </div>
+                
+                <div class="workout-card reveal">
+                    <div class="workout-image">🏋️‍♀️</div>
+                    <div class="workout-content">
+                        <span class="workout-duration">20 Minutes</span>
+                        <h3>Strength Builder</h3>
+                        <p class="workout-description">Bodyweight exercises including planks, lunges, and burpees to build lean muscle and core strength.</p>
+                    </div>
+                </div>
+                
+                <div class="workout-card reveal">
+                    <div class="workout-image">❤️</div>
+                    <div class="workout-content">
+                        <span class="workout-duration">25 Minutes</span>
+                        <h3>Cardio Blast</h3>
+                        <p class="workout-description">High-intensity interval training to boost cardiovascular health and burn calories efficiently.</p>
+                    </div>
+                </div>
+                
+                <div class="workout-card reveal">
+                    <div class="workout-image">🧘‍♀️</div>
+                    <div class="workout-content">
+                        <span class="workout-duration">30 Minutes</span>
+                        <h3>Flexibility & Recovery</h3>
+                        <p class="workout-description">Yoga and stretching routine to improve flexibility, reduce stress, and aid muscle recovery.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutrition Section -->
+    <section id="nutrition" class="section">
+        <div class="section-header reveal">
+            <h2 class="section-title">Nutrition Essentials</h2>
+            <p class="section-subtitle">Fuel your body with the right nutrients for optimal performance and health</p>
+        </div>
+        
+        <div class="nutrition-grid">
+            <div class="nutrition-content reveal">
+                <h3>Balanced Eating Principles</h3>
+                <ul class="nutrition-list">
+                    <li>Include protein in every meal for muscle maintenance</li>
+                    <li>Choose complex carbohydrates for sustained energy</li>
+                    <li>Eat colorful fruits and vegetables for vitamins</li>
+                    <li>Include healthy fats like avocados and nuts</li>
+                    <li>Time your meals around your workouts</li>
+                    <li>Practice portion control and mindful eating</li>
+                </ul>
+            </div>
+            <div class="nutrition-visual reveal">
+                🥗
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats-section">
+        <div class="section">
+            <div class="section-header reveal">
+                <h2 class="section-title">Your Fitness Impact</h2>
+                <p class="section-subtitle">See the positive changes regular exercise brings to your life</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item reveal">
+                    <h3>150+</h3>
+                    <p>Minutes of weekly exercise recommended</p>
+                </div>
+                <div class="stat-item reveal">
+                    <h3>30%</h3>
+                    <p>Reduced risk of chronic diseases</p>
+                </div>
+                <div class="stat-item reveal">
+                    <h3>7-9</h3>
+                    <p>Hours of sleep for optimal recovery</p>
+                </div>
+                <div class="stat-item reveal">
+                    <h3>2L+</h3>
+                    <p>Daily water intake for peak performance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo" style="margin-bottom: 1rem;">FitLife</div>
+            <p>Your wellness journey starts with a single step. Stay consistent, stay motivated, and transform your life.</p>
+            <p style="margin-top: 2rem; opacity: 0.7;">&copy; 2025 FitLife. Empowering healthy lifestyles worldwide.</p>
+            <p style="margin-top: 1rem; opacity: 0.5; font-size: 0.9rem;">Designed and built by <a href="https://github.com/Blessan-Corley" target="_blank" style="color: inherit; text-decoration: none; transition: opacity 0.3s ease; border-bottom: 1px solid transparent;" onmouseover="this.style.opacity='0.8'; this.style.borderBottom='1px solid rgba(255,255,255,0.3)'" onmouseout="this.style.opacity='0.5'; this.style.borderBottom='1px solid transparent'">Blessan Corley</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Initialize reveal on load
+        revealOnScroll();
+
+        // Add some interactive feedback
+        document.querySelectorAll('.tip-card, .workout-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add click animations to CTA button
+        document.querySelector('.cta-button').addEventListener('click', function(e) {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
+        });
+    </script>
+</body>
+</html>
